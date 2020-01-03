@@ -13,7 +13,11 @@ set nocompatible
 set noshiftround
 set number
 set ruler
+set spell
 set shiftwidth=2
+set smarttab
+set autoindent
+set cindent
 set softtabstop=2
 set tabstop=2
 set textwidth=79
@@ -24,6 +28,22 @@ set incsearch
 set redrawtime=10000
 set lazyredraw
 set backspace=indent,eol,start
+
+function EnterOrIndentTag()
+  let line = getline(".")
+  let col = getpos(".")[2]
+  let before = line[col-2]
+  let after = line[col-1]
+
+  if before == ">" && after == "<"
+    return "\<Enter>\<C-o>O"
+  endif
+   return "\<Enter>"
+endfunction
+
+inoremap <expr> <Enter> EnterOrIndentTag()
+
+filetype indent off
 """"""""""""""""""""""""""""Key Maps"""""""""""""""""""""""""""""""
 map f w
 nnoremap <S-Up> :m-2<CR>
@@ -31,13 +51,9 @@ nnoremap <S-Down> :m+<CR>
 inoremap <S-Up> <Esc>:m-2<CR>
 inoremap <S-Down> <Esc>:m+<CR>
 vnoremap <Leader>s :sort<CR>
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
+map <leader>m :bn<cr>
+map <leader>n :bp<cr>
+map <leader>d :bd<cr>
 " Disable Arrow Keys
 "noremap <Up> <Nop>
 "noremap <Down> <Nop>
@@ -65,17 +81,15 @@ highlight ALEErrorSign ctermbg=NONE ctermfg=red
 highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
 
 " use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction
+" 
+" inoremap <silent><expr> <Tab>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<Tab>" :
+"       \ coc#refresh()
 
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
-
+"inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 inoremap <expr> <Tab> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-map <C-p> :NERDTreeToggle<CR>
-

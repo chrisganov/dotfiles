@@ -1,0 +1,8 @@
+ale
+auto-pairs
+coc.nvim
+identLine
+vim-closetag
+vim-gitgutter
+vim-polyglot
+vim-prettier
