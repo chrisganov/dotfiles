@@ -89,6 +89,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Yggdroot/indentLine'
 Plug 'alvan/vim-closetag'
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'prettier/vim-prettier'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -144,6 +145,7 @@ let g:coc_global_extensions = [
   \ 'coc-pairs',
   \ 'coc-tsserver',
   \ 'coc-eslint',
+  \ 'coc-tslint-plugin',
   \ 'coc-prettier',
   \ 'coc-json',
   \ 'coc-rls',
@@ -289,8 +291,13 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 
 " saerch for files is mapped as ctrl p
-nnoremap <C-p> :Files<Cr>
-nnoremap <C-g> :Rg<Cr>
-nnoremap <C-b> :CtrlPBuffer<CR>
+nnoremap <leader>b :CtrlPBuffer<CR>
+noremap <leader><leader> :CtrlP<CR>
+nnoremap <leader>t :CtrlPTag<cr>
 
 inoremap jj <Esc>
+
+:set hlsearch
+autocmd InsertEnter * :let @/=""
+autocmd InsertLeave * :let @/=""
+set tags=tags
