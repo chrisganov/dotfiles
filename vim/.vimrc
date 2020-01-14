@@ -32,8 +32,12 @@ set backspace=indent,eol,start
 set noswapfile
 set nobackup
 set nowritebackup
+set hlsearch
+filetype indent off
 hi clear SpellBad
 hi SpellBad cterm=bold,underline,italic
+
+""""""""""""""""""""""""""""""FUNCTIONS""""""""""""""""""""""""""""""
 function EnterOrIndentTag()
   let line = getline(".")
   let col = getpos(".")[2]
@@ -46,26 +50,36 @@ function EnterOrIndentTag()
     return "\<Enter>"
 endfunction
 
-inoremap <expr> <Enter> EnterOrIndentTag()
+" A function that jumps to the end of same indent 
+function! GoToNextIndent(inc)
+    " Get the cursor current position
+    let currentPos = getpos('.')
+    let currentLine = currentPos[1]
+    let matchIndent = 0
 
-filetype indent off
+    " Look for a line with the same indent level whithout going out of the buffer
+    while !matchIndent && currentLine != line('$') + 1 && currentLine != -1
+        let currentLine += a:inc
+        let matchIndent = indent(currentLine) == indent('.')
+    endwhile
 
- " augroup Linting
-	 " autocmd!
-	 " autocmd FileType python setlocal makeprg=pylint\ --output-format=parseable
-   " autocmd FileType javascript setlocal makeprg=eslint\ --output-format=parseable
-   " autocmd FileType typescript setlocal makeprg=tslint\ --output-format=parseable
-	 " autocmd BufWritePost *.py,*.js,*.jsx,*.ts, silent make! <afile> | silent redraw!
-	 " autocmd QuickFixCmdPost [^l]* cwindow
- " augroup END
+    " If a line is found go to this line
+    if (matchIndent)
+        let currentPos[1] = currentLine
+        call setpos('.', currentPos)
+    endif
+endfunction
 
 """""""""""""""""""""""""""netrw settings""""""""""""""""""""""""""""
+
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
 let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
-""""""""""""""""""""""""""""Key Maps"""""""""""""""""""""""""""""""
+
+""""""""""""""""""""""""""""Key Maps""""""""""""""""""""""""""""""
+
 map f w
 nnoremap <S-Up> :m-2<CR>
 nnoremap <S-Down> :m+<CR>
@@ -75,11 +89,28 @@ vnoremap <Leader>s :sort<CR>
 map <leader>, :bn<cr>
 map <leader>. :bp<cr>
 map <leader>d :bd<cr>
-" Disable Arrow Keys
-"noremap <Up> <Nop>
-"noremap <Down> <Nop>
-"noremap <Left> <Nop>
-"noremap <Right> <Nop>
+inoremap jj <Esc>
+autocmd InsertEnter * :let @/=""
+autocmd InsertLeave * :let @/=""
+
+" Disable Arrow Keys in Normal Mode
+noremap <Up> :call GoToNextIndent(-1)<cr>
+noremap <Down> :call GoToNextIndent(1)<cr>
+noremap <Left> <<
+noremap <Right> >>
+" Disable Arrow keys in Insert Mode
+inoremap <Up> <Nop>
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+
+
+" On enter if it should indent a tag
+inoremap <expr> <Enter> EnterOrIndentTag()
+
+" Maps for got end of the indent function
+vnoremap <leader><Tab> :call gotonextindent(1)<cr>
+vnoremap <leader><S-TAB> :call GoToNextIndent(-1)<CR>
 
 """""""""""""""""""""""""""Plugins""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
@@ -125,8 +156,6 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 
 set completeopt-=preview
-
-" lightline config
 
 " always display status line
 set laststatus=2
@@ -295,9 +324,4 @@ nnoremap <leader>b :CtrlPBuffer<CR>
 noremap <leader><leader> :CtrlP<CR>
 nnoremap <leader>t :CtrlPTag<cr>
 
-inoremap jj <Esc>
-
-:set hlsearch
-autocmd InsertEnter * :let @/=""
-autocmd InsertLeave * :let @/=""
 set tags=tags
