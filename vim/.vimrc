@@ -1,4 +1,10 @@
 """""""""""""""""""""""""Basic Setup""""""""""""""""""""""""""
+if has('gui_running')
+    set guifont=Source\ Code\ Pro\:h16
+    set guioptions=
+    set tw=120
+endif
+
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
@@ -16,6 +22,7 @@ set ruler
 set shiftwidth=2
 set smarttab
 set autoindent
+set tw=120
 set smartindent
 set cindent
 set softtabstop=2
@@ -23,6 +30,7 @@ set tabstop=2
 set textwidth=79
 set ttyfast
 set wrap
+set nocursorline
 set spell
 set hlsearch
 set incsearch
@@ -80,7 +88,6 @@ let g:netrw_winsize = 25
 
 """"""""""""""""""""""""""""Key Maps""""""""""""""""""""""""""""""
 
-map f w
 nnoremap <S-Up> :m-2<CR>
 nnoremap <S-Down> :m+<CR>
 inoremap <S-Up> <Esc>:m-2<CR>
@@ -92,6 +99,7 @@ map <leader>d :bd<cr>
 inoremap jj <Esc>
 autocmd InsertEnter * :let @/=""
 autocmd InsertLeave * :let @/=""
+noremap <leader>q :bd<CR>
 
 " Disable Arrow Keys in Normal Mode
 noremap <Up> :call GoToNextIndent(-1)<cr>
@@ -99,10 +107,10 @@ noremap <Down> :call GoToNextIndent(1)<cr>
 noremap <Left> <<
 noremap <Right> >>
 " Disable Arrow keys in Insert Mode
-inoremap <Up> <Nop>
-inoremap <Down> <Nop>
-inoremap <Left> <Nop>
-inoremap <Right> <Nop>
+" inoremap <Up> <Nop>
+" inoremap <Down> <Nop>
+" inoremap <Left> <Nop>
+" inoremap <Right> <Nop>
 
 
 " On enter if it should indent a tag
@@ -111,6 +119,11 @@ inoremap <expr> <Enter> EnterOrIndentTag()
 " Maps for got end of the indent function
 vnoremap <leader><Tab> :call gotonextindent(1)<cr>
 vnoremap <leader><S-TAB> :call GoToNextIndent(-1)<CR>
+
+noremap <Leader>y "*y
+noremap <Leader>p "*p
+noremap <Leader>Y "+y
+noremap <Leader>P "+p
 
 """""""""""""""""""""""""""Plugins""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
@@ -132,6 +145,7 @@ Plug 'ap/vim-css-color'
 call plug#end()
 syntax on
 colorscheme gruvbox
+set background=dark
 filetype off
 filetype plugin indent on
 
@@ -141,11 +155,10 @@ let g:prettier#config#bracket_spacing = 'false'
 let g:prettier#config#single_quote = 'true'
 
 " Ale setting
-let g:ale_sign_error = '●'
-let g:ale_sign_warning = '.'
-let g:ale_lint_on_enter = 0
-highlight ALEErrorSign ctermbg=red ctermfg=white
-highlight ALEWarningSign ctermbg=black ctermfg=black
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+highlight ALEErrorSign ctermbg=NONE ctermfg=red
+highlight ALEWarningSign ctermbg=NONE ctermfg=yellow
 let b:ale_linters = ['eslint']
 
 " Git Gutter
@@ -153,7 +166,7 @@ set updatetime=100
 
 
 let g:ctrlp_working_path_mode = 0
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+let g:ctrlp_custom_ignore = 'docs\|dist\|build\|node_modules\|DS_Store\|git'
 
 set completeopt-=preview
 
@@ -163,9 +176,9 @@ set laststatus=2
 " hide mode
 set noshowmode
 
-let g:lightline = {
-      \ 'colorscheme': 'jellybeans',
-      \ }
+" let g:lightline = {
+"       \ 'colorscheme': 'jellybeans',
+"       \ }
 
 " STARTING FOR COC
 " if hidden is not set, TextEdit might fail.
@@ -180,7 +193,6 @@ let g:coc_global_extensions = [
   \ 'coc-rls',
   \ ]
 
-set hidden
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 
@@ -325,3 +337,24 @@ noremap <leader><leader> :CtrlP<CR>
 nnoremap <leader>t :CtrlPTag<cr>
 
 set tags=tags
+
+let g:lightline = {
+  \   'active': {
+  \     'left':[ [ 'mode', 'paste' ],
+  \              [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+  \     ]
+  \   },
+	\   'component': {
+	\     'lineinfo': ' %3l:%-2v',
+	\   },
+  \   'component_function': {
+  \     'gitbranch': 'fugitive#head',
+  \   }
+  \ }
+let g:lightline.separator = {
+	\   'left': '', 'right': ''
+  \}
+let g:lightline.subseparator = {
+	\   'left': '', 'right': ''
+  \}
+
