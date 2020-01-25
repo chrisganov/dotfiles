@@ -1,7 +1,7 @@
 # Dotfiles and configurations
 
 ## Apps and CLI:
----------------
+
 * nvm
 * ripgrep
 * Python3 / then:  pip3 install --user pynvim
@@ -21,7 +21,6 @@
 **End MacOS specific**
 
 ## Npm global packages
-----------------------
 
 * create-react-app
 * eslint
@@ -41,7 +40,7 @@ react-devtools tslint typescript typescript-language-server
 vscode-html-languageserver-bin`
 
 ## General configuration:
-------------------------
+
 * Remap CAPS to CTRL
 
 
