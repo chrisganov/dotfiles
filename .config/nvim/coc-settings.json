@@ -1,0 +1,13 @@
+{
+  "eslint.nodePath": "~/.nvm/versions/node/v10.18.0/lib/node_modules/",
+  "diagnostic.errorSign": "!",
+  "diagnostic.warningSign": "?",
+  "diagnostic.infoSign": "@",
+  "eslint.filetypes": ["javascript", "javascriptreact"],
+  "suggest.echodocSupport": true,
+  "suggest.maxCompleteItemCount": 20,
+  "prettier.printWidth": 120,
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.bracketSpacing": false
+}

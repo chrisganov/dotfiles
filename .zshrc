@@ -95,8 +95,12 @@ export LANG=en_US.UTF-8
 # For a full list of active aliases, run `alias`.
 
 alias p='cd ~/Desktop/Projects'
-alias v="open -a MacVim.app $1"
+alias vim='nvim'
+alias debug='node --inspect-brk'
 
 # export NVM_DIR=~/.nvm
  # [ -s "$NVM_DIR/nvm.sh"  && . "$NVM_DIR/nvm.sh"
 eval "$(starship init zsh)"
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
