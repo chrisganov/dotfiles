@@ -2,7 +2,6 @@
 
 ## Apps and CLI:
 
-* nvm
 * ripgrep
 * Python3 / then:  pip3 install --user pynvim
 * NeoVim / vim-plug
@@ -11,7 +10,7 @@
 * ZSH / OH MY ZSH
 * MongoDB
 * Google cloud sdk
-* Input Font / Font Fira Code
+* Fura Code Nerd Font
 
 **MacOS specific**
 
@@ -46,4 +45,3 @@ vscode-html-languageserver-bin`
 
 ## NeoVim configuration:
 * After install of all plugins, execute `:UpdateRemovePlugins`
-*

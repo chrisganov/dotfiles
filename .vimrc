@@ -1,9 +1,9 @@
-"""""""""""""""""""""""""Basic Setup""""""""""""""""""""""""""
-" if has('gui_running')
-"     set guifont=Source\ Code\ Pro\:h16
-"     set guioptions=
-"     set tw=120
-" endif
+""""""""""""""""""""""""Basic Setup""""""""""""""""""""""""""
+if has('gui_running')
+    set guifont=Input\ Mono\:h14
+    set guioptions=
+    set tw=120
+endif
 
 syntax on
 set background=dark
@@ -14,10 +14,10 @@ let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
 let mapleader = " "
 set belloff=all
-set encoding=UTF-8
 set expandtab
 set formatoptions=tcqrn1
 set listchars=tab:▸\ ,eol:¬
+set hidden
 " set mouse=a
 " set nowrap
 set nocompatible
@@ -101,17 +101,31 @@ Plug 'tpope/vim-commentary'
 Plug 'prettier/vim-prettier'
 Plug 'Yggdroot/indentLine'
 " Plug 'ctrlpvim/ctrlp.vim' - Using denite instead
-Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'morhetz/gruvbox'
+if has('nvim')
+  Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/denite.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 Plug 'sheerun/vim-polyglot'
 Plug 'itchyny/lightline.vim'
 Plug 'taohexxx/lightline-buffer'
 Plug 'cakebaker/scss-syntax.vim'
+Plug 'preservim/nerdtree'
 Plug 'ap/vim-css-color'
+Plug 'ryanoasis/vim-devicons'
 call plug#end()
 colorscheme gruvbox
-
+set encoding=UTF-8
 """""""""""""""""""""""""""Plugins setup""""""""""""""""""""""""""""""
+" NerdTree
+map <leader>[ :NERDTreeToggle<CR>
+autocmd StdinReadPre * let s:std_in=1
+let NERDTreeMinimalUI=1
+let g:NERDTreeStatusline = '%#NonText#'
+
 " Prettier settings
 let g:prettier#config#bracket_spacing = 'false'
 let g:prettier#config#single_quote = 'true'
@@ -156,6 +170,7 @@ set shortmess+=c
 
 " always show signcolumns
 set signcolumn=yes
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 
 
 let g:python_host_prog  = "/usr/bin/python"
@@ -163,7 +178,6 @@ let g:python3_host_prog = "/usr/local/bin/python3"
 
 
 " Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
       \ <SID>check_back_space() ? "\<TAB>" :
@@ -342,7 +356,7 @@ let g:lightline.subseparator = {
 " lightline-buffer ui settings
 " replace these symbols with ascii characters if your environment does not support unicode
 let g:lightline_buffer_readonly_icon = ''
-let g:lightline_buffer_modified_icon = '✭'
+let g:lightline_buffer_modified_icon = ' ' 
 let g:lightline_buffer_git_icon = ''
 let g:lightline_buffer_ellipsis_icon = '..'
 let g:lightline_buffer_expand_left_icon = '◀ '
@@ -368,7 +382,7 @@ call denite#custom#option('_', {
 "   --glob:  Include or exclues files for searching that match the given glob
 "            (aka ignore .git files)
 "
-call denite#custom#var('file/rec', 'command', ['rg', '--files', '--glob', '!.git docs'])
+call denite#custom#var('file/rec', 'command', ['rg', '--files', '--vimgrep'])
 
 " Use ripgrep in place of "grep"
 call denite#custom#var('grep', 'command', ['rg'])
@@ -385,7 +399,6 @@ call denite#custom#var('grep', 'recursive_opts', [])
 call denite#custom#var('grep', 'pattern_opt', ['--regexp'])
 call denite#custom#var('grep', 'separator', ['--'])
 call denite#custom#var('grep', 'final_opts', [])
-
 " Remove date from buffer list
 call denite#custom#var('buffer', 'date_format', '')
 
@@ -456,3 +469,4 @@ function! s:denite_my_settings() abort
   nnoremap <silent><buffer><expr> <C-h>
   \ denite#do_map('do_action', 'split')
 endfunction
+ 
