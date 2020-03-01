@@ -5,6 +5,7 @@ if has('gui_running')
     set tw=120
 endif
 
+set termguicolors
 syntax on
 set background=dark
 filetype off
@@ -20,11 +21,11 @@ set listchars=tab:▸\ ,eol:¬
 set hidden
 " set mouse=a
 " set nowrap
-set nocompatible
 set noshiftround
 set number
 set nrformats=
 set ruler
+set incsearch
 set shiftwidth=2
 set smarttab
 set autoindent
@@ -33,20 +34,17 @@ set smartindent
 set cindent
 set softtabstop=2
 set tabstop=2
-set textwidth=79
+set textwidth=120
 set ttyfast
 set wrap
 set nocursorline
 set spell
-set hlsearch
-set incsearch
 set redrawtime=10000
 set lazyredraw
 set backspace=indent,eol,start
 set noswapfile
 set nobackup
 set nowritebackup
-set hlsearch
 filetype indent off
 hi clear SpellBad
 hi SpellBad cterm=bold,underline,italic
@@ -66,20 +64,23 @@ nnoremap <S-Down> :m+<CR>
 inoremap <S-Up> <Esc>:m-2<CR>
 inoremap <S-Down> <Esc>:m+<CR>
 vnoremap <Leader>s :sort<CR>
-map <leader>. :bn<cr>
-map <leader>, :bp<cr>
-map <leader>d :bd<cr>
+nnoremap <Right> :bn<CR>
+nnoremap <Left> :bp<CR>
+map <leader>q :bd<cr>
 " inoremap jj <Esc>
 autocmd InsertEnter * :let @/=""
 autocmd InsertLeave * :let @/=""
-noremap <leader>q :bd<CR>
+tnoremap <Esc> <C-\><C-n>
+" " Disable Arrow keys in Insert Mode
+inoremap <Up> <Nop>
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
 
-" Disable Arrow keys in Insert Mode
-" inoremap <Up> <Nop>
-" inoremap <Down> <Nop>
-" inoremap <Left> <Nop>
-" inoremap <Right> <Nop>
-
+nnoremap <Up> <Nop>
+nnoremap <Down> <Nop>
+" nnoremap <Left> <Nop>
+" nnoremap <Right> <Nop>
 " Maps for got end of the indent function
 vnoremap <leader><Tab> :call gotonextindent(1)<cr>
 vnoremap <leader><S-TAB> :call GoToNextIndent(-1)<CR>
@@ -91,7 +92,6 @@ noremap <Leader>P "+p
 
 """""""""""""""""""""""""""Plugins""""""""""""""""""""""""
 call plug#begin('~/.vim/plugged')
-" Plug 'dense-analysis/ale' - Using LSP (coc-vim) instead
 Plug 'jiangmiao/auto-pairs'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'alvan/vim-closetag'
@@ -99,9 +99,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
 Plug 'prettier/vim-prettier'
+Plug 'gruvbox-community/gruvbox'
 Plug 'Yggdroot/indentLine'
-" Plug 'ctrlpvim/ctrlp.vim' - Using denite instead
-Plug 'morhetz/gruvbox'
 if has('nvim')
   Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -109,6 +108,7 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
+Plug 'rhysd/clever-f.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'itchyny/lightline.vim'
 Plug 'taohexxx/lightline-buffer'
@@ -117,9 +117,11 @@ Plug 'preservim/nerdtree'
 Plug 'ap/vim-css-color'
 Plug 'ryanoasis/vim-devicons'
 call plug#end()
-colorscheme gruvbox
 set encoding=UTF-8
 """""""""""""""""""""""""""Plugins setup""""""""""""""""""""""""""""""
+let g:onedark_termcolors=256
+let g:onedark_terminal_italics=1
+let g:onedark_hide_endofbuffer=1
 " NerdTree
 map <leader>[ :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
@@ -156,12 +158,12 @@ let g:coc_global_extensions = [
   \ 'coc-pairs',
   \ 'coc-tsserver',
   \ 'coc-eslint',
-  \ 'coc-tslint-plugin',
   \ 'coc-prettier',
   \ 'coc-json',
   \ 'coc-rls',
   \ ]
 
+  " \ 'coc-tslint-plugin',
 " You will have bad experience for diagnostic messages when it's default 4000.
 set updatetime=300
 
@@ -469,4 +471,5 @@ function! s:denite_my_settings() abort
   nnoremap <silent><buffer><expr> <C-h>
   \ denite#do_map('do_action', 'split')
 endfunction
- 
+
+colorscheme gruvbox
