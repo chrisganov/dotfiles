@@ -10,7 +10,7 @@ There are two things you can do about this warning:
 2. Remove this warning from your init file so you won't see it again."))
   (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
   ;; Comment/uncomment this line to enable MELPA Stable if desired.  See `package-archive-priorities`
-  ;; and `package-pinned-packages`. Most users will not need or wantto do this.
+  ;; and `package-pinned-packages`. Most users will not need or wanto do this.
   ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
   )
 (package-initialize) 
@@ -24,77 +24,72 @@ There are two things you can do about this warning:
 	:config (which-key-mode))
 
 (use-package gruvbox-theme
- :ensure t)
+	:ensure t)
 
-(use-package undo-tree
- :ensure t)
+ (use-package web-mode
+ 	:ensure t
+   :mode
+   (
+    ".html?$"
+    )
+ 	:init
+   ;; TSX setup
+   (add-to-list 'auto-mode-alist '(".tsx$" . web-mode))
+   (add-hook 'web-mode-hook
+             (lambda ()
+               (when (string-equal "tsx" (file-name-extension buffer-file-name))
+                 (setup-tide-mode))))
 
-(use-package goto-chg
- :ensure t)
+   ;; JSX Setup
+   (add-to-list 'auto-mode-alist '(".jsx$" . web-mode))
+   (add-hook 'web-mode-hook
+             (lambda ()
+               (when (string-equal "jsx" (file-name-extension buffer-file-name))
+                 (setup-tide-mode))))
+   :defer 5
+   :config
+   (setq
+    web-mode-markup-indent-offset 2
+    web-mode-css-indent-offset 2
+    web-mode-code-indent-offset 2
+    web-mode-enable-auto-closing t
+    web-mode-enable-auto-opening t
+    web-mode-enable-auto-pairing t
+    web-mode-enable-auto-indentation t))
 
-(use-package evil
- :ensure t)
+ (use-package js2-mode
+ 	:ensure t
+ 	:mode ".js$"
+   :interpreter "node"
+ 	:init
+ 	(setq-default js2-concat-multiline-strings 'eol)
+   (setq-default js2-global-externs '("module" "require" "setTimeout" "clearTimeout" "setInterval"
+                                      "clearInterval" "location" "__dirname" "console" "JSON" "window"
+                                      "process" "fetch"))
+   (setq-default js2-strict-trailing-comma-warning t)
+ 	:config
 
-(require 'evil)
-(evil-mode 1)
+ 	(use-package rjsx-mode :ensure t
+     :mode "\\.jsx\\'")
 
-(use-package web-mode
-  :mode (
-				 ("\\.html$" . web-mode)
-				 ("\\.tsx\\'" . web-mode))
-	:hook (
-    (web-mode-hook . electric-pair-mode)
-    (web-mode-hook . (lambda ()
-            (when (string-equal "tsx" (file-name-extension buffer-file-name))
-              (setup-tide-mode)))))
-  :init
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-code-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (setq js-indent-level 2)
-  (setq web-mode-enable-auto-pairing t)
-  (setq web-mode-enable-auto-expanding t)
-  (setq web-mode-enable-css-colorization t))
+   (use-package js2-refactor :ensure t)
+ 
+   (use-package nodejs-repl :ensure t)
+   (add-hook 'js2-mode-hook #'js2-refactor-mode)
+   (add-hook 'js2-mode-hook
+             '(lambda ()
+                (js2-refactor-mode)
+                (js2r-add-keybindings-with-prefix "M-m")
+                (key-chord-define js2-mode-map ";;" (λ (save-excursion (move-end-of-line nil) (insert ";"))))
+                (key-chord-define js2-mode-map ",," (λ (save-excursion (move-end-of-line nil) (insert ",")))))))
 
-(use-package web-beautify
-  :commands (web-beautify-css
-             web-beautify-css-buffer
-             web-beautify-html
-             web-beautify-html-buffer
-             web-beautify-js
-             web-beautify-js-buffer))
-
-(use-package js2-mode
-	:ensure t
-	:mode "\\.js\\'"
-  :interpreter "node"
-	:init
-	(setq-default js2-concat-multiline-strings 'eol)
-  (setq-default js2-global-externs '("module" "require" "setTimeout" "clearTimeout" "setInterval"
-                                     "clearInterval" "location" "__dirname" "console" "JSON" "window"
-                                     "process" "fetch"))
-  (setq-default js2-strict-trailing-comma-warning t)
-	:config
-	(use-package rjsx-mode :ensure t
-    :mode "\\.jsx\\'")
-
-  (use-package js2-refactor :ensure t)
-  
-  (use-package nodejs-repl :ensure t)
-  (add-hook 'js2-mode-hook #'js2-refactor-mode)
-  (add-hook 'js2-mode-hook
-            '(lambda ()
-               (js2-refactor-mode)
-               (js2r-add-keybindings-with-prefix "M-m")
-               (key-chord-define js2-mode-map ";;" (λ (save-excursion (move-end-of-line nil) (insert ";"))))
-               (key-chord-define js2-mode-map ",," (λ (save-excursion (move-end-of-line nil) (insert ",")))))))
 
 (use-package rjsx-mode
-	:ensure t
-	:init)
+ :ensure t
+ :init)
 
 (use-package emmet-mode
-  :diminish (emmet-mode . "ε")
+	:ensure t
   :bind* (("C-)" . emmet-next-edit-point)
           ("C-(" . emmet-prev-edit-point))
   :commands (emmet-mode
@@ -103,51 +98,52 @@ There are two things you can do about this warning:
   :init
   (setq emmet-indentation 2)
   (setq emmet-move-cursor-between-quotes t)
-  :bind (:map evil-insert-state-map
-    ("C-a" . emmet-expand-line))
+  :bind (("C-." . emmet-expand-line))
   :hook (
-    (sgm-mode . emmet-mode)
-    (web-mode . emmet-mode)
-    (css-mode . emmet-mode))
+				 (sgm-mode . emmet-mode)
+				 (web-mode . emmet-mode)
+				 (css-mode . emmet-mode))
   :config
   ;; Auto-start on any markup modes
-  ;; (add-hook 'sgml-mode-hook 'emmet-mode)
-  ;; (add-hook 'web-mode-hook 'emmet-mode)
-  ;; (add-hook 'css-mode-hook 'emmet-mode)
+  (add-hook 'sgml-mode-hook 'emmet-mode)
+  (add-hook 'web-mode-hook 'emmet-mode)
+  (add-hook 'css-mode-hook 'emmet-mode)
   (setq emmet-move-cursor-between-quotes t)
   (setq emmet-expand-jsx-className? t)
   (setq emmet-self-closing-tag-style " /"))
 
 (use-package json-mode
-  :mode "\\.json\\'"
+  :mode ".json$"
   :config
   (bind-key "{" #'paredit-open-curly json-mode-map)
   (bind-key "}" #'paredit-close-curly json-mode-map))
 
-;; TypeScript
-(use-package typescript-mode
-  :mode (("\\.ts\\'" . typescript-mode)
-         ("\\.tsx\\'" . typescript-mode)))
+ (use-package tide
+   :init
+   ;; (add-hook 'before-save-hook 'tide-format-before-save)  ;; formats the buffer before saving
+   (add-hook 'js2-mode-hook #'setup-tide-mode)  ;; JS Setup
+   (add-hook 'typescript-mode-hook #'setup-tide-mode)
+   :defer 5
+   :config
+   ;; TIDE setup
+   (defun setup-tide-mode ()
+     (interactive)
+     (tide-setup)
+     (flycheck-mode +1)
+     (setq flycheck-check-syntax-automatically '(save mode-enabled))
+     (eldoc-mode +1)
+     ;; company is an optional dependency. You have to
+     ;; install it separately via package-install
+     (company-mode +1))
 
-(defun setup-tide-mode ()
-  (interactive)
-  (defun tide-imenu-index () nil)
-  (tide-setup)
-  (tide-hl-identifier-mode +1))
+   ;; aligns annotation to the right hand side
+   (setq company-tooltip-align-annotations t)
 
-(use-package tide
-	:after (typescript-mode company flycheck)
-	:hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode))
-  :config
-  (progn
-    (add-hook 'typescript-mode-hook #'setup-tide-mode)
-    (add-hook 'js-mode-hook #'setup-tide-mode)
-    (add-hook 'js2-mode-hook #'setup-tide-mode)
-    (add-hook 'rjsx-mode-hook #'setup-tide-mode)))
+   ;; Set tide-tsserver
+   (setq tide-tsserver-executable "node_modules/typescript/bin/tsserver"))
 
-(use-package flycheck
- :ensure t)
+ (use-package flycheck
+ 	:ensure t)
 
 (use-package rainbow-delimiters
  :ensure t
@@ -176,31 +172,9 @@ There are two things you can do about this warning:
     (indent-guide-global-mode)
     (setq indent-guide-recursive t)))
 
-(use-package evil-leader
-  :ensure t
-  :init
-  (progn
-    (global-evil-leader-mode 1)
-    (evil-leader/set-leader "<SPC>")))
-
-(use-package ace-jump-mode
-  :ensure t
-  :init
-  (progn
-    (evil-leader/set-key "<SPC>" 'evil-ace-jump-char-mode)))
-
 (use-package all-the-icons 
 	:ensure t
 	:defer 0.5)
-
-(use-package all-the-icons-ivy
-	:ensure t
-  :after (all-the-icons ivy)
-  :custom (all-the-icons-ivy-buffer-commands '(ivy-switch-buffer-other-window ivy-switch-buffer))
-  :config
-  (add-to-list 'all-the-icons-ivy-file-commands 'counsel-dired-jump)
-  (add-to-list 'all-the-icons-ivy-file-commands 'counsel-find-library)
-  (all-the-icons-ivy-setup))
 
 (use-package company
 	:ensure t
@@ -220,12 +194,12 @@ There are two things you can do about this warning:
   (add-to-list 'company-backends 'company-web-html))
 
 (use-package company-tern
- :ensure t
- :config
- (add-to-list 'company-backends 'company-tern)
- (add-hook 'js2-mode-hook (lambda ()
-                           (tern-mode)
-                           (commpany-mode))))
+	:ensure t
+	:config
+	(add-to-list 'company-backends 'company-tern)
+	(add-hook 'js2-mode-hook (lambda ()
+														 (tern-mode)
+														 (commpany-mode))))
 
 (use-package all-the-icons-dired :ensure t)
 
@@ -247,29 +221,41 @@ There are two things you can do about this warning:
 (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
 (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
 (use-package dap-mode
- :ensure t)
+	:ensure t)
 
 (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+
+
+;; (use-package undo-tree
+;; :ensure t)
+
+;; (use-package goto-chg
+;;	:ensure t)
+
+;; (use-package evil
+;; :ensure t)     
+
+;; (require 'evil )
+;; (evil-mode 1 )  
 
 (global-display-line-numbers-mode)
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
-(set-frame-font "Input Mono Compressed 14" nil t)
+(set-frame-font "Input Mono 14" nil t)
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024))
 (setq-default tab-width 2)
 (setq inhibit-startup-screen t)
 (setq make-backup-files nil)
 (load-theme 'gruvbox t)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-	 '("b89ae2d35d2e18e4286c8be8aaecb41022c1a306070f64a66fd114310ade88aa" default))
- '(package-selected-packages
-	 '(tide doom-modeline shut-up rainbow-delimiters which-key web-mode use-package rjsx-mode gruvbox-theme flycheck evil emmet-mode)))
+ '(js2-include-node-externs t)
+ '(package-selected-packages '(rjsx-mode gruvbox-theme which-key use-package)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
