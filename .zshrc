@@ -1,3 +1,6 @@
+# Uncomment bellow to test zsh speed (do not forget to uncomment last line too)
+# zmodload zsh/zprof
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -68,7 +71,7 @@ ENABLE_CORRECTION="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git nvm zsh-syntax-highlighting)
+plugins+=(z git zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -93,14 +96,14 @@ export LANG=en_US.UTF-8
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
 # For a full list of active aliases, run `alias`.
+autoload -U add-zsh-hook
+add-zsh-hook -Uz chpwd (){ ls -a; }
 
 alias p='cd ~/Desktop/Projects'
 alias vim='nvim'
-alias debug='node --inspect-brk'
-
-# export NVM_DIR=~/.nvm
- # [ -s "$NVM_DIR/nvm.sh"  && . "$NVM_DIR/nvm.sh"
+alias debug='ndb'
+alias tmux='tmux -2'
 eval "$(starship init zsh)"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-
+# zprof

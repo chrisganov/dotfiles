@@ -1,0 +1,12 @@
+{
+  "eslint.filetypes": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "suggest.echodocSupport": true,
+  "suggest.maxCompleteItemCount": 20,
+  "typescript.suggest.autoImports": true,
+  "javascript.suggest.autoImports": true,
+  "coc.preferences.extensionUpdateCheck": "weekly",
+  "prettier.printWidth": 120,
+  "prettier.semi": true,
+  "prettier.singleQuote": true,
+  "prettier.bracketSpacing": true
+}
