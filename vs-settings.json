@@ -1,0 +1,136 @@
+{
+    "workbench.startupEditor": "newUntitledFile",
+    "editor.minimap.enabled": false,
+    "files.autoSave": "onFocusChange",
+    "breadcrumbs.enabled": false,
+    "editor.fontFamily": "Iosevka, 'Courier New', monospace",
+    "editor.fontLigatures": true,
+    "liveServer.settings.donotShowInfoMsg": true,
+    "editor.fontSize": 14,
+    "editor.tabSize": 2,
+    "debug.console.fontSize": 14,
+    "terminal.integrated.fontSize": 14,
+    "explorer.confirmDelete": false,
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "workbench.editor.enablePreview": true,
+    "workbench.iconTheme": "simple-icons",
+    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true,
+    "editor.formatOnType": true,
+    "editor.parameterHints.enabled": false,
+    "editor.formatOnPaste": true,
+    "editor.cursorBlinking": "smooth",
+    "files.trimFinalNewlines": true,
+    "window.zoomLevel": 0,
+    "editor.cursorStyle": "block",
+    "terminal.integrated.rendererType": "dom",
+    "typescript.updateImportsOnFileMove.enabled": "always",
+    "emmet.showSuggestionsAsSnippets": true,
+    "emmet.triggerExpansionOnTab": true,
+    "emmet.syntaxProfiles": {
+        "html": {
+            "attr_quotes": "single"
+        },
+        "jsx": {
+            "self_closing_tag": true,
+            "attr_quotes": "single"
+        },
+        "tsx": {
+            "self_closing_tag": true,
+            "attr_quotes": "single"
+        }
+    },
+    "workbench.colorTheme": "Gruvbox Dark Medium",
+    "todo-tree.highlights.customHighlight": {
+        "TODO": {
+            "type": "text",
+            "foreground": "#72a8ff",
+            "background": "white"
+        },
+        "FIXME": {
+            "icon": "alert",
+            "type": "text",
+            "foreground": "#d6c61b",
+            "background": "white",
+            "opacity": 10
+        },
+        "OPTIMIZE": {
+            "icon": "dashboard",
+            "type": "text",
+            "foreground": "#0bb710",
+            "background": "white",
+            "opacity": 10
+        },
+        "STOPSHIP": {
+            "icon": "flame",
+            "type": "text",
+            "foreground": "#b70b0b",
+            "background": "white",
+            "opacity": 10
+        }
+    },
+    "todo-tree.tree.expanded": true,
+    "todo-tree.general.tags": [
+        "TODO",
+        "todo",
+        "FIXME",
+        "fixme",
+        "OPTIMIZE",
+        "STOPSHIP"
+    ],
+    "[scss]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "explorer.confirmDragAndDrop": false,
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "debug.node.autoAttach": "off",
+    "[yaml]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "prettier.jsxSingleQuote": true,
+    "prettier.singleQuote": true,
+    "prettier.bracketSpacing": true,
+    "cSpell.userWords": [
+        "firestore"
+    ],
+    "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+    "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "todo-tree.tree.showScanModeButton": false,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "liveServer.settings.donotVerifyTags": true,
+    "vim.cursorStylePerMode.insert": "line",
+    "vim.cursorStylePerMode.replace": "underline",
+    "vim.normalModeKeyBindingsNonRecursive": [
+        {
+            "before": [
+                "j"
+            ],
+            "commands": [
+                "cursorDown"
+            ]
+        },
+        {
+            "before": [
+                "k"
+            ],
+            "commands": [
+                "cursorUp"
+            ]
+        }
+    ]
+}
