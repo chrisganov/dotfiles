@@ -3,6 +3,9 @@
 ## Apps and CLI:
 
 * ripgrep
+* FZF
+* NNN
+* tmux
 * Python3 / then:  pip3 install --user pynvim
 * NeoVim / vim-plug
 * Docker
@@ -10,7 +13,7 @@
 * ZSH / OH MY ZSH
 * MongoDB
 * Google cloud sdk
-* Fura Code Nerd Font
+* Iosevka Font 
 
 **MacOS specific**
 
