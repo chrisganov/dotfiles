@@ -1,9 +1,12 @@
 {
-    "workbench.startupEditor": "newUntitledFile",
+    "editor.snippetSuggestions": "bottom",
+    "editor.tabCompletion": "on",
+    "workbench.startupEditor": "none",
     "editor.minimap.enabled": false,
     "files.autoSave": "onFocusChange",
     "breadcrumbs.enabled": false,
     "editor.fontFamily": "Iosevka, 'Courier New', monospace",
+    "workbench.iconTheme": "chalice-icon-theme",
     "editor.fontLigatures": true,
     "liveServer.settings.donotShowInfoMsg": true,
     "editor.fontSize": 14,
@@ -11,11 +14,13 @@
     "debug.console.fontSize": 14,
     "terminal.integrated.fontSize": 14,
     "explorer.confirmDelete": false,
-    "[typescriptreact]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
-    },
+    "editor.folding": false,
+    "workbench.activityBar.visible": false,
+    "editor.occurrencesHighlight": false,
+    "editor.matchBrackets": false,
+    "workbench.editor.tabCloseButton": "off",
+    "workbench.statusBar.visible": false,
     "workbench.editor.enablePreview": true,
-    "workbench.iconTheme": "simple-icons",
     "javascript.format.insertSpaceAfterOpeningAndBeforeClosingTemplateStringBraces": true,
     "editor.formatOnType": true,
     "editor.parameterHints.enabled": false,
@@ -41,12 +46,11 @@
             "attr_quotes": "single"
         }
     },
-    "workbench.colorTheme": "Gruvbox Dark Medium",
     "todo-tree.highlights.customHighlight": {
         "TODO": {
             "type": "text",
             "foreground": "#72a8ff",
-            "background": "white"
+            "background": "white",
         },
         "FIXME": {
             "icon": "alert",
@@ -71,20 +75,22 @@
         }
     },
     "todo-tree.tree.expanded": true,
+    "todo-tree.filtering.ignoreGitSubmodules": true,
+    "todo-tree.filtering.excludeGlobs": ["**/public/vendors/*"],
     "todo-tree.general.tags": [
         "TODO",
         "todo",
         "FIXME",
         "fixme",
         "OPTIMIZE",
-        "STOPSHIP"
+        "STOPSHIP",
     ],
     "[scss]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "explorer.confirmDragAndDrop": false,
     "[typescript]": {
-        "editor.defaultFormatter": "vscode.typescript-language-features"
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[json]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -99,9 +105,20 @@
     "[javascript]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[python]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 4,
+    },
     "prettier.jsxSingleQuote": true,
     "prettier.singleQuote": true,
     "prettier.bracketSpacing": true,
+    "prettier.printWidth": 120,
     "cSpell.userWords": [
         "firestore"
     ],
@@ -111,26 +128,9 @@
     "javascript.updateImportsOnFileMove.enabled": "always",
     "todo-tree.tree.showScanModeButton": false,
     "editor.suggestSelection": "first",
-    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
     "liveServer.settings.donotVerifyTags": true,
-    "vim.cursorStylePerMode.insert": "line",
-    "vim.cursorStylePerMode.replace": "underline",
-    "vim.normalModeKeyBindingsNonRecursive": [
-        {
-            "before": [
-                "j"
-            ],
-            "commands": [
-                "cursorDown"
-            ]
-        },
-        {
-            "before": [
-                "k"
-            ],
-            "commands": [
-                "cursorUp"
-            ]
-        }
-    ]
+    "[jsonc]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.colorTheme": "Gruvbox Dark Medium",
 }
