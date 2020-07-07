@@ -99,10 +99,13 @@ export LANG=en_US.UTF-8
 autoload -U add-zsh-hook
 add-zsh-hook -Uz chpwd (){ ls -a; }
 
-alias p='cd ~/Desktop/Projects'
+export FZF_DEFAULT_COMMAND='rg --files --hidden --smart-case --glob "!docs/*" --glob "!.git/*"'
+
+alias p='cd ~/www'
+alias dd='cd ~/www/diamonds/src/Diamonds'
 alias vim='nvim'
 alias debug='ndb'
-alias tmux='tmux -2'
+# alias tmux='tmux -2'
 eval "$(starship init zsh)"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
